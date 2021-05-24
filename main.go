@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"database/sql"
 	 _ "github.com/go-sql-driver/mysql"
+	"time"
+	"strconv"
 )
 
 type Barang struct {
@@ -76,7 +78,8 @@ func transaksi(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	for res.Next() {
 		var detail Detail
 		err = res.Scan(&detail.Nama, &detail.Stock)
-		total, err += strconv(detail.Stock)
+
+		total, err = strconv.Atoi(detail.Stock)
 
 		if err != nil {
 			panic(err.Error())
